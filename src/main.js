@@ -1,26 +1,24 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const { app, BrowserWindow, Menu, shell, ipcMain } = require('electron');
+const Ball = require('./client/ball');
+const Tray = require('./client/tray');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+// 初始窗口
 const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-    },
+  ipcMain.on('open-url', (event, url) => {
+    shell.openExternal(url);
   });
+  Menu.setApplicationMenu(null)
+ 
+  const ball = Ball()
+  // 是否默认打开控制台
+  // ball.webContents.openDevTools();
+  Tray(ball)
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

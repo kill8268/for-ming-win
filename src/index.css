@@ -1,7 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.drag {
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+.ball {
+  width: 100%;
+  height: 100%;
 }

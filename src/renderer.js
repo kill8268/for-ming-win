@@ -25,7 +25,31 @@
  *  });
  * ```
  */
-
+// 浏览器环境入口文件
 import './index.css';
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+let id;
+let isDrag = false;
+
+document.querySelector('.ball').addEventListener('mousedown', (e) => {
+  id = setTimeout(() => {
+    isDrag = true;
+    ipcRenderer.send('window-move-evt', {
+      id: 1,
+      move: true
+    });
+  }, 100)
+})
+
+document.querySelector('.ball').addEventListener('mouseup', (e) => {
+  if (!isDrag) {
+    clearTimeout(id);
+    ipcRenderer.send('open-url', 'https://www.bing.com');
+  }
+  isDrag = false;
+  ipcRenderer.send('window-move-evt', {
+    id: 1,
+    move: false
+  });
+})
+
